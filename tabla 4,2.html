@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Ventas Interactiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        #totalGanancias {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Tabla de Ventas Interactiva</h2>
+    <form id="formularioVentas">
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Productos Comprados</th>
+                    <th>Cantidad</th>
+                    <th>Productos Totales</th>
+                    <th>Precio</th>
+                    <th>Ganancias</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cerveza</td>
+                    <td><input type="number" name="cerveza" id="cerveza" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosCerveza" id="compradosCerveza" min="0" value="0" required></td>
+                    <td id="totalCerveza">0</td>
+                    <td>$28.00</td>
+                    <td id="gananciaCerveza">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Cuba</td>
+                    <td><input type="number" name="cuba" id="cuba" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosCuba" id="compradosCuba" min="0" value="0" required></td>
+                    <td id="totalCuba">0</td>
+                    <td>$45.00</td>
+                    <td id="gananciaCuba">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Caguama</td>
+                    <td><input type="number" name="caguama" id="caguama" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosCaguama" id="compradosCaguama" min="0" value="0" required></td>
+                    <td id="totalCaguama">0</td>
+                    <td>$70.00</td>
+                    <td id="gananciaCaguama">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Refresco</td>
+                    <td><input type="number" name="refresco" id="refresco" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosRefresco" id="compradosRefresco" min="0" value="0" required></td>
+                    <td id="totalRefresco">0</td>
+                    <td>$25.00</td>
+                    <td id="gananciaRefresco">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Cigarro Marlboro</td>
+                    <td><input type="number" name="marlboro" id="marlboro" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosMarlboro" id="compradosMarlboro" min="0" value="0" required></td>
+                    <td id="totalMarlboro">0</td>
+                    <td>$7.00</td>
+                    <td id="gananciaMarlboro">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Cigarro faros</td>
+                    <td><input type="number" name="capsula" id="capsula" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosCapsula" id="compradosCapsula" min="0" value="0" required></td>
+                    <td id="totalCapsula">0</td>
+                    <td>$6.00</td>
+                    <td id="gananciaCapsula">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Sopa</td>
+                    <td><input type="number" name="sopa" id="sopa" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosSopa" id="compradosSopa" min="0" value="0" required></td>
+                    <td id="totalSopa">0</td>
+                    <td>$28.00</td>
+                    <td id="gananciaSopa">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Botana</td>
+                    <td><input type="number" name="botana" id="botana" min="0" value="0" required></td>
+                    <td><input type="number" name="compradosBotana" id="compradosBotana" min="0" value="0" required></td>
+                    <td id="totalBotana">0</td>
+                    <td>$25.00</td>
+                    <td id="gananciaBotana">$0.00</td>
+                </tr>
+                <tr>
+                    <td colspan="5">Total Ganancias</td>
+                    <td id="totalGanancias">$0.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <script>
+        function cargarDatos() {
+            var productos = [
+                "cerveza",
+                "cuba",
+                "caguama",
+                "refresco",
+                "marlboro",
+                "capsula",
+                "sopa",
+                "botana"
+            ];
+
+            productos.forEach(function(producto) {
+                var cantidad = localStorage.getItem(producto) || 0;
+                var comprados = localStorage.getItem("comprados" + capitalize(producto)) || 0;
+                document.getElementById(producto).value = cantidad;
+                document.getElementById("comprados" + capitalize(producto)).value = comprados;
+            });
+        }
+
+        function guardarDatos() {
+            var productos = [
+                "cerveza",
+                "cuba",
+                "caguama",
+                "refresco",
+                "marlboro",
+                "capsula",
+                "sopa",
+                "botana"
+            ];
+
+            productos.forEach(function(producto) {
+                var cantidad = document.getElementById(producto).value;
+                var comprados = document.getElementById("comprados" + capitalize(producto)).value;
+                localStorage.setItem(producto, cantidad);
+                localStorage.setItem("comprados" + capitalize(producto), comprados);
+            });
+        }
+
+        function calcularGanancias() {
+            var productos = [
+                { id: "cerveza", precio: 28 },
+                { id: "cuba", precio: 45 },
+                { id: "caguama", precio: 70 },
+                { id: "refresco", precio: 25 },
+                { id: "marlboro", precio: 7 },
+                { id: "capsula", precio: 6 },
+                { id: "sopa", precio: 28 },
+                { id: "botana", precio: 25 }
+            ];
+
+            var totalGanancias = 0;
+
+            productos.forEach(function(producto) {
+                var comprados = parseInt(document.getElementById(producto.id).value);
+                var cantidad = parseInt(document.getElementById("comprados" + capitalize(producto.id)).value);
+                var total = comprados - cantidad;
+                document.getElementById("total" + capitalize(producto.id)).textContent = total;
+
+                var ganancia = cantidad * producto.precio;
+                document.getElementById("ganancia" + capitalize(producto.id)).textContent = "$" + ganancia.toFixed(2);
+                totalGanancias += ganancia;
+            });
+
+            document.getElementById("totalGanancias").textContent = "$" + totalGanancias.toFixed(2);
+            guardarDatos();
+        }
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', calcularGanancias);
+        });
+
+        window.addEventListener('load', function() {
+            cargarDatos();
+            calcularGanancias();
+        });
+
+        calcularGanancias(); // Initial calculation
+    </script>
+</body>
+</html>
